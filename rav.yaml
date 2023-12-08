@@ -1,0 +1,23 @@
+scripts:
+  runserver: uvicorn src.main:app --reload
+  installs: python.exe -m pip install -r requirements.txt
+  test: pytest src/tests.py
+  empty-build: docker build -f Dockerfile.empty -t empty-py .
+  empty-shell: docker exec -it empty-py /bin/bash
+  empty-run: docker run -p 1235:8000 --rm --name empty-py -it empty-py
+  build: docker build -f Dockerfile -t serverless-py . 
+  # run: docker run -p 1234:8000 --rm --name serverless-py -it serverless-py
+  run: docker run --env-file .env -p 1234:8000 --rm --name serverless-py -it serverless-py
+  build_run:
+    - rav run build
+    - rav run run
+  configure:
+    - gcloud auth configure-docker us-central1-docker.pkg.dev
+    - gcloud artifacts repositories create serverless-py-repo --repository-format=docker --location=us-central1
+  push: 
+    - docker build -f Dockerfile -t serverless-py .
+    - docker tag serverless-py us-central1-docker.pkg.dev/serverless-app-udemy-fastapi/serverless-py-repo/serverless-py:latest
+    - docker tag serverless-py us-central1-docker.pkg.dev/serverless-app-udemy-fastapi/serverless-py-repo/serverless-py:v1
+    - docker push us-central1-docker.pkg.dev/serverless-app-udemy-fastapi/serverless-py-repo/serverless-py --all-tags
+  deploy:
+    - gcloud run deploy serverless-py-run --image=us-central1-docker.pkg.dev/serverless-app-udemy-fastapi/serverless-py-repo/serverless-py:latest --allow-unauthenticated --region=us-central1 --project=serverless-app-udemy-fastapi

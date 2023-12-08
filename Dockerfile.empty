@@ -1,0 +1,8 @@
+ 
+FROM python:3.8.16-slim
+
+COPY . /app
+WORKDIR /app
+
+# Run the app
+CMD ["python", "-m", "http.server"]

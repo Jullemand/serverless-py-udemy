@@ -1,0 +1,80 @@
+ NOTES 
+ and also order of actions to do
+
+### New VENV
+python -m venv venv
+
+--- and then activate
+venv/Scripts/activate
+
+-- create requirements.txt and load it
+python.exe -m pip install -r requirements.txt
+python.exe -m pip install --upgrade pip   # if you want
+
+### Implement API using FastAPI in main
+
+### Run the local server
+# guunicorn is our web server gateway interface
+uvicorn src.main:app
+
+### RAV files
+# A simple way to reference commands
+pip install rav
+e.g.: rav run runserver    # activates the "runserver" command
+
+### Testing
+pytest src             # ---> 0 items
+pytest src/tests.py    # ---> gives results
+rav run test
+
+### Set up Dockerfile - also name of the file
+--- Should follow the above lineup
+# 1. which version of python
+# 2. requirements 
+# 3. create a virtual venv
+# 4. run app
+
+Think a Docker Container as its "own operating system" or as its "own server"
+Instructions for a Linux machine
+
+### Make the Docker Entrypoint shell script 
+# instructions for a Linux computer
+
+### Make .dockerignore identical to .gitignore 
+-> what I dont want on Git I nor want on Docker
+-- the file can be found on GitHub as python template
+
+### Create Docker Images using "build" command
+# Remember to open Docker Desktop before building/running
+# docker build -f <dockerfilename> -t <tag_name / image name> <location>
+# docker run <image_name>  
+# docker run -it <image_name>   --> that is interactive  
+
+# You cannot access a Docker image without exposing the port 
+# docker run -p <PORT> -it <image_name>   
+# docker run -p 1234:8000 -it <image_name>  -----> I can access on 127.0.0.1:1234 
+# docker system prune   ---> removes unused files
+
+# docker ps:                                    see running containers
+# docker exec -it <container_ID> /bin/bash      to enter shell of that live container
+--->  then you can run linux commands (on shell) line by line
+
+# Update .dockerignore
+go through list of files in container and update Dockerignore file 
+e.g. add .git/ and Dockerfiles
+
+### Pusing to GCloud
+# Config (update yaml file)
+gcloud auth configure-docker us-central1-docker.pkg.dev
+
+# Push format
+docker push <repos-at-docker-hub>/<image_name>:latest
+ 
+# Tag format
+docker tag <image_name> <region>-docker.pkg.dev/serverless-app-udemy-fastapi/<repo-name>/<image-name>:<tag-name>
+
+# Deploy on Google Cloud
+Either manually or CLI
+gcloud run deploy <new service's name> --image=<image> --allow-unauthenticated --region=<region> --project=<GCloud project name>
+
+    - gcloud run deploy serverless-py-run --image=us-central1-docker.pkg.dev/serverless-app-udemy-fastapi/serverless-py-repo/serverless-py:latest --allow-unauthenticated --region=us-central1 --project=serverless-app-udemy-fastapi
