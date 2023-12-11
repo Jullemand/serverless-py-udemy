@@ -78,3 +78,13 @@ Either manually or CLI
 gcloud run deploy <new service's name> --image=<image> --allow-unauthenticated --region=<region> --project=<GCloud project name>
 
     - gcloud run deploy serverless-py-run --image=us-central1-docker.pkg.dev/serverless-app-udemy-fastapi/serverless-py-repo/serverless-py:latest --allow-unauthenticated --region=us-central1 --project=serverless-app-udemy-fastapi
+
+### Secret Manager 
+#  choose to make the secrets from the .env file
+
+gcloud secrets create <secrets_file_name> --data-file <secrets_file>              ---- to create
+gcloud secrets versions add <secrets_file_name> --data-file <secrets_file>        ---- to update
+gcloud secrets versions access "latest" --secret py_env_file                      ---- to see the secrets
+
+# Now we want Python to also be able to access these secerets on Google Run
+gcloud auth application-default login       --- to log in

@@ -8,6 +8,8 @@ scripts:
   build: docker build -f Dockerfile -t serverless-py . 
   # run: docker run -p 1234:8000 --rm --name serverless-py -it serverless-py
   run: docker run --env-file .env -p 1234:8000 --rm --name serverless-py -it serverless-py
+  update_secrets: 
+    - gcloud secrets versions add py_env_file --data-file .env
   build_run:
     - rav run build
     - rav run run

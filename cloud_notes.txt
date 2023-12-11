@@ -1,0 +1,14 @@
+Using Cloud SQL:
+
+34.30.217.107 - VMs external IP
+34.122.31.203 - public IP address
+
+Create instance: VM
+Change IP address under VPC
+Create instance: MySQL
+Add connection/auth: add your VMs external IP as auth. network
+Authorize VM and Connect to VM
+Install MySQL on VM
+
+# Connect to MySQL - in Cloud Shell
+mysql -h  34.122.31.203 -u root -p
