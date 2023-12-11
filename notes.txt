@@ -1,5 +1,12 @@
- NOTES 
- and also order of actions to do
+NOTES 
+and also order of actions to do
+
+### GIT
+# first create remote branch using repos git-name
+git remote add origin git@github.com:Jullemand/serverless-py-udemy.git
+git remote -v               ---> Here you should see the local and remote branch
+git push -u origin main     ---> main is name of remote branch (??) 
+# All set
 
 ### New VENV
 python -m venv venv
@@ -9,7 +16,7 @@ venv/Scripts/activate
 
 -- create requirements.txt and load it
 python.exe -m pip install -r requirements.txt
-python.exe -m pip install --upgrade pip   # if you want
+python.exe -m pip install --upgrade pip   # if you want 
 
 ### Implement API using FastAPI in main
 
@@ -78,6 +85,8 @@ Either manually or CLI
 gcloud run deploy <new service's name> --image=<image> --allow-unauthenticated --region=<region> --project=<GCloud project name>
 
     - gcloud run deploy serverless-py-run --image=us-central1-docker.pkg.dev/serverless-app-udemy-fastapi/serverless-py-repo/serverless-py:latest --allow-unauthenticated --region=us-central1 --project=serverless-app-udemy-fastapi
+
+!! Make sure that the new pushed container also gets traffic 
 
 ### Secret Manager 
 #  choose to make the secrets from the .env file
