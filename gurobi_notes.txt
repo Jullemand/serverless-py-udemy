@@ -1,0 +1,4 @@
+options = { "WLSACCESSID": "e4f3d6b5-1866-4a4c-8bcd-4dce91fd36d3", "WLSSECRET": "23deaca1-8b69-485e-b8ab-94e86f86b56c", "LICENSEID": 2452780 } 
+with gp.Env(params=options) as env, gp.Model(env=env) as model: 
+    model.optimize()
+    # Formulate problem

@@ -4,7 +4,7 @@ and also order of actions to do
 ### GIT
 # first create remote branch using repos git-name
 git remote add origin git@github.com:Jullemand/serverless-py-udemy.git
-git remote -v               ---> Here you should see the local and remote branch
+git remote -v               ---> Here you should see the remote fetch/push branch
 git push -u origin main     ---> main is name of remote branch (??) 
 # All set
 

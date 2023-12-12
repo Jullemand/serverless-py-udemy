@@ -1,5 +1,6 @@
  
 FROM python:3.8.16-slim
+FROM gurobi/python:latest
 
 # what code files to add
 # COPY <from directory> <container directory> 

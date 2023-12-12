@@ -6,7 +6,6 @@ scripts:
   empty-shell: docker exec -it empty-py /bin/bash
   empty-run: docker run -p 1235:8000 --rm --name empty-py -it empty-py
   build: docker build -f Dockerfile -t serverless-py . 
-  # run: docker run -p 1234:8000 --rm --name serverless-py -it serverless-py
   run: docker run --env-file .env -p 1234:8000 --rm --name serverless-py -it serverless-py
   update_secrets: 
     - gcloud secrets versions add py_env_file --data-file .env
@@ -22,4 +21,17 @@ scripts:
     - docker tag serverless-py us-central1-docker.pkg.dev/serverless-app-udemy-fastapi/serverless-py-repo/serverless-py:v1
     - docker push us-central1-docker.pkg.dev/serverless-app-udemy-fastapi/serverless-py-repo/serverless-py --all-tags
   deploy:
-    - gcloud run deploy serverless-py-run --image=us-central1-docker.pkg.dev/serverless-app-udemy-fastapi/serverless-py-repo/serverless-py:latest --allow-unauthenticated --region=us-central1 --project=serverless-app-udemy-fastapi
+    - gcloud run deploy serverless-py-run --project=serverless-app-udemy-fastapi --image=us-central1-docker.pkg.dev/serverless-app-udemy-fastapi/serverless-py-repo/serverless-py:latest --allow-unauthenticated --region=us-central1
+  gurobi-build: docker build -f Dockerfile -t serverless-py-gurobi .    # -t is tag/name
+  gurobi-run: docker run --volume=$PWD/models:/models gurobi/python  /models/poolsearch.py
+  gurobi-pull: docker pull gurobi/gurobi   # gurobi/python 
+  gurobi-pull: docker pull gurobi/python
+  gurobi-run-1: docker run -it -e GRB_LICENSE_FILE=23deaca1-8b69-485e-b8ab-94e86f86b56c gurobi/python
+  gurobi-run-1: docker run -it -e GRB_LICENSE_FILE=23deaca1-8b69-485e-b8ab-94e86f86b56c serverless-py-gurobi
+  gurobi-push:
+    - gurobi-build
+    - docker tag serverless-py-gurobi us-central1-docker.pkg.dev/serverless-app-udemy-fastapi/serverless-py-repo/serverless-py-gurobi:latest
+    - docker push us-central1-docker.pkg.dev/serverless-app-udemy-fastapi/serverless-py-repo/serverless-py-gurobi --all-tags
+  gurobi-deploy:
+    - gcloud run deploy serverless-py-run --project=serverless-app-udemy-fastapi --image=us-central1-docker.pkg.dev/serverless-app-udemy-fastapi/serverless-py-repo/serverless-py-gurobi:latest --allow-unauthenticated --region=us-central1
+  
