@@ -1,6 +1,7 @@
 .git/
 Dockerfile
 Dockerfile.empty
+.gurobi_notes.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
