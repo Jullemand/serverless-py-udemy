@@ -1,5 +1,5 @@
-gurobi_notes.txt
-application_default_credentials.json
+/gurobi_notes.txt
+/application_default_credentials.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
